@@ -16,8 +16,8 @@ public class PcsController(IPcService service) : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("{id}/components")]
-    public async Task<IActionResult> GetComponents(int id)
+    [HttpGet("{id:int}/components")]
+    public async Task<IActionResult> GetComponents([FromRoute] int id)
     {
         var result = await service.GetComponents(id);
 
@@ -29,7 +29,7 @@ public class PcsController(IPcService service) : ControllerBase
 
     [HttpPost]
     public async Task<IActionResult> Create(
-        CreatePcRequestDto dto)
+        [FromBody] CreatePcRequestDto dto)
     {
         var result =
             await service.Create(dto);
@@ -39,10 +39,10 @@ public class PcsController(IPcService service) : ControllerBase
             result);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(
-        int id,
-        UpdatePcRequestDto dto)
+        [FromRoute] int id,
+        [FromBody] UpdatePcRequestDto dto)
     {
         var updated =
             await service.Update(id, dto);
@@ -53,9 +53,9 @@ public class PcsController(IPcService service) : ControllerBase
         return Ok();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(
-        int id)
+        [FromRoute] int id)
     {
         var deleted =
             await service.Delete(id);
